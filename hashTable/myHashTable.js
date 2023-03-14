@@ -30,6 +30,19 @@ class MyHashTable {
       }
     }
   }
+
+  keys() {
+    const keysArr = []
+    for (let i = 0; i < this.data.length; i++) {
+      const specificEl = this.data[i]
+      if (specificEl) {
+        for (let j = 0; j < specificEl.length; j++) {
+          keysArr.push(specificEl[j][0])
+        }
+      }
+    }
+    return keysArr
+  }
 }
 
 const myHash = new MyHashTable(20)
@@ -38,4 +51,5 @@ myHash.set('grape', 223)
 myHash.set('grapee', 2203)
 myHash.set('grapeee', 22003)
 myHash.set('grapeeee', 223000)
-console.log(myHash.get('grapeeee'))
+// console.log(myHash.get('grapeeee'))
+console.log(myHash.keys())
