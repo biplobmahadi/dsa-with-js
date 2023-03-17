@@ -71,12 +71,25 @@ class LinkedList {
       this.len--
     }
   }
+
+  reverse() {
+    // check needed thing
+    let currentNode = this.head
+    let prevNode = null
+    this.tail = currentNode
+
+    while (currentNode) {
+      let nxtNode = currentNode.next
+      currentNode.next = prevNode
+      prevNode = currentNode
+      currentNode = nxtNode
+    }
+    this.head = prevNode
+  }
 }
 
 const myLinkedList = new LinkedList(10)
 myLinkedList.append(5)
 myLinkedList.append(6)
-myLinkedList.prepend(60)
-myLinkedList.insert(2, 500)
-myLinkedList.remove(2)
-console.log(myLinkedList.printList())
+myLinkedList.reverse()
+console.log(myLinkedList.head)
