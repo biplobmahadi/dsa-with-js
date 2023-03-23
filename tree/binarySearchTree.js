@@ -34,6 +34,25 @@ class BST {
       }
     }
   }
+
+  lookup(value) {
+    // check necessary things
+    let currentNode = this.root
+    while (currentNode) {
+      if (currentNode.value === value) {
+        return currentNode
+      }
+      if (currentNode.value < value) {
+        currentNode = currentNode.right
+      } else {
+        currentNode = currentNode.left
+      }
+    }
+  }
+
+  remove(value) {
+    // check necessary things
+  }
 }
 
 const bst = new BST()
@@ -44,4 +63,3 @@ bst.insert(20)
 bst.insert(170)
 bst.insert(15)
 bst.insert(1)
-console.log(bst.root)
