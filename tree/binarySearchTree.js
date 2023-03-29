@@ -15,7 +15,7 @@ class BST {
     const newNode = new Node(value)
     if (!this.root) {
       this.root = newNode
-      return
+      return this
     }
     let currentNode = this.root
     while (true) {
@@ -52,6 +52,64 @@ class BST {
 
   remove(value) {
     // check necessary things
+    let prevNode = null
+    let currentNode = this.root
+    while (currentNode) {
+      if (value > currentNode.value) {
+        prevNode = currentNode
+        currentNode = currentNode.right
+        this.findAndRemove(value, prevNode, currentNode, 'right')
+      } else if (value < currentNode.value) {
+        prevNode = currentNode
+        currentNode = currentNode.left
+        this.findAndRemove(value, prevNode, currentNode, 'left')
+      } else {
+        currentNode = null
+      }
+    }
+    return this
+  }
+
+  findAndRemove(value, prevNode, currentNode, currentNodedirectionWithPrev) {
+    if (currentNode.value === value) {
+      if (currentNode.left === null && currentNode.right === null) {
+        currentNode = null
+        prevNode[currentNodedirectionWithPrev] = null
+      } else if (currentNode.left === null && currentNode.right) {
+        prevNode[currentNodedirectionWithPrev] = currentNode.right
+        currentNode = null
+      } else if (currentNode.left && currentNode.right === null) {
+        prevNode[currentNodedirectionWithPrev] = currentNode.left
+        currentNode = null
+      } else {
+        let leftOfCurrent = currentNode.left
+        if (leftOfCurrent.right) {
+          let prevMax = leftOfCurrent
+          let maxNode = leftOfCurrent.right
+          while (maxNode.right) {
+            prevMax = maxNode
+            maxNode = maxNode.right
+          }
+          if (maxNode.left) {
+            prevMax.right = maxNode.left
+            maxNode.right = currentNode.right
+            maxNode.left = currentNode.left
+            prevNode[currentNodedirectionWithPrev] = maxNode
+            currentNode = null
+          } else {
+            prevMax.right = null
+            maxNode.right = currentNode.right
+            maxNode.left = currentNode.left
+            prevNode[currentNodedirectionWithPrev] = maxNode
+            currentNode = null
+          }
+        } else {
+          leftOfCurrent.right = currentNode.right
+          prevNode[currentNodedirectionWithPrev] = leftOfCurrent
+          currentNode = null
+        }
+      }
+    }
   }
 }
 
@@ -63,3 +121,10 @@ bst.insert(20)
 bst.insert(170)
 bst.insert(15)
 bst.insert(1)
+bst.insert(16)
+bst.insert(18)
+bst.insert(17)
+
+bst.remove(20)
+
+console.log(bst.root.right.left)
