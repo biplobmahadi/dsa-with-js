@@ -111,6 +111,36 @@ class BST {
       }
     }
   }
+
+  bfsIterative() {
+    const result = []
+    const queue = [this.root]
+
+    while (queue.length > 0) {
+      const item = queue.shift()
+      result.push(item.value)
+
+      if (item.left) {
+        queue.push(item.left)
+      }
+      if (item.right) {
+        queue.push(item.right)
+      }
+    }
+    return result
+  }
+
+  bfsRecursive(queue, result) {
+    if (!queue.length) return result
+
+    const item = queue.shift()
+    result.push(item.value)
+
+    if (item.left) queue.push(item.left)
+    if (item.right) queue.push(item.right)
+
+    return this.bfsRecursive(queue, result)
+  }
 }
 
 const bst = new BST()
@@ -121,10 +151,12 @@ bst.insert(20)
 bst.insert(170)
 bst.insert(15)
 bst.insert(1)
-bst.insert(16)
-bst.insert(18)
-bst.insert(17)
+// bst.insert(16)
+// bst.insert(18)
+// bst.insert(17)
 
-bst.remove(20)
+// bst.remove(20)
 
-console.log(bst.root.right.left)
+console.log(bst.bfsIterative())
+console.log(bst.bfsRecursive([bst.root], []))
+// console.log(bst.root.right.left)
