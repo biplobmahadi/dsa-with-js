@@ -141,6 +141,27 @@ class BST {
 
     return this.bfsRecursive(queue, result)
   }
+
+  dfsInOrder(node, list) {
+    if (node.left) this.dfsInOrder(node.left, list)
+    list.push(node.value)
+    if (node.right) this.dfsInOrder(node.right, list)
+    return list
+  }
+
+  dfsPreOrder(node, list) {
+    list.push(node.value)
+    if (node.left) this.dfsPreOrder(node.left, list)
+    if (node.right) this.dfsPreOrder(node.right, list)
+    return list
+  }
+
+  dfsPostOrder(node, list) {
+    if (node.left) this.dfsPostOrder(node.left, list)
+    if (node.right) this.dfsPostOrder(node.right, list)
+    list.push(node.value)
+    return list
+  }
 }
 
 const bst = new BST()
@@ -157,6 +178,11 @@ bst.insert(1)
 
 // bst.remove(20)
 
-console.log(bst.bfsIterative())
-console.log(bst.bfsRecursive([bst.root], []))
+// console.log(bst.bfsIterative())
+// console.log(bst.bfsRecursive([bst.root], []))
+
+console.log(bst.dfsInOrder(bst.root, []))
+console.log(bst.dfsPreOrder(bst.root, []))
+console.log(bst.dfsPostOrder(bst.root, []))
+
 // console.log(bst.root.right.left)
