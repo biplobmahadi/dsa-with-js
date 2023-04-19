@@ -162,6 +162,71 @@ class BST {
     list.push(node.value)
     return list
   }
+
+  dfsPreOrderIterative() {
+    const stack = []
+    const result = []
+
+    stack.push(this.root)
+
+    while (stack.length) {
+      const node = stack.pop()
+      result.push(node.value)
+
+      if (node.right) stack.push(node.right)
+      if (node.left) stack.push(node.left)
+    }
+
+    return result
+  }
+
+  dfsInOrderIterative() {
+    const stack = []
+    const result = []
+
+    let currentNode = this.root
+
+    while (stack.length || currentNode) {
+      if (currentNode) {
+        stack.push(currentNode)
+        currentNode = currentNode.left
+      } else {
+        const poppedNode = stack.pop()
+        result.push(poppedNode.value)
+        if (poppedNode.right) {
+          currentNode = poppedNode.right
+        }
+      }
+    }
+
+    return result
+  }
+
+  dfsPostOrderIterative() {
+    const stack = []
+    const result = []
+
+    let currentNode = this.root
+    let visitedNode = null
+
+    while (stack.length || currentNode) {
+      if (currentNode) {
+        stack.push(currentNode)
+        currentNode = currentNode.left
+      } else {
+        const peakedNode = stack[stack.length - 1]
+        if (peakedNode.right && peakedNode.right !== visitedNode) {
+          currentNode = peakedNode.right
+        } else {
+          const poppedNode = stack.pop()
+          result.push(poppedNode.value)
+          visitedNode = poppedNode
+        }
+      }
+    }
+
+    return result
+  }
 }
 
 const bst = new BST()
@@ -172,6 +237,9 @@ bst.insert(20)
 bst.insert(170)
 bst.insert(15)
 bst.insert(1)
+bst.insert(2)
+bst.insert(8)
+bst.insert(7)
 // bst.insert(16)
 // bst.insert(18)
 // bst.insert(17)
@@ -181,8 +249,12 @@ bst.insert(1)
 // console.log(bst.bfsIterative())
 // console.log(bst.bfsRecursive([bst.root], []))
 
-console.log(bst.dfsInOrder(bst.root, []))
-console.log(bst.dfsPreOrder(bst.root, []))
+// console.log(bst.dfsPreOrder(bst.root, []))
+// console.log(bst.dfsInOrder(bst.root, []))
 console.log(bst.dfsPostOrder(bst.root, []))
+
+// console.log(bst.dfsPreOrderIterative())
+// console.log(bst.dfsInOrderIterative())
+console.log(bst.dfsPostOrderIterative())
 
 // console.log(bst.root.right.left)
