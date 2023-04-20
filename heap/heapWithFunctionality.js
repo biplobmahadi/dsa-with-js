@@ -1,4 +1,5 @@
 const heap = [undefined, 15, 10, 12, 5, 6]
+const heap2 = [undefined, 40, 30, 10, 20, 15]
 
 const insert = (heap, element) => {
   heap.push(element)
@@ -12,32 +13,35 @@ const insert = (heap, element) => {
       heap[parent] = heap[position]
       heap[position] = tmp
       position = parent
+    } else {
+      return
     }
   }
   return heap
 }
 
-const del = (heap, element) => {
+const del = (heap) => {
   const last = heap.pop()
   heap.splice(1, 1, last)
 
-  const len = heap.length
   let position = 1
+  const len = heap.length
+
   while (len > position) {
     const leftChild = 2 * position
     const rightChild = leftChild + 1
 
-    if (rightChild < len) {
-      if (heap[leftChild] > heap[rightChild]) {
-        const tmp = heap[leftChild]
-        heap[leftChild] = heap[position]
+    if (heap[leftChild] || heap[rightChild]) {
+      let compared = leftChild
+      if (heap[rightChild]) {
+        compared = heap[leftChild] > heap[rightChild] ? leftChild : rightChild
+      }
+
+      if (heap[compared] > heap[position]) {
+        const tmp = heap[compared]
+        heap[compared] = heap[position]
         heap[position] = tmp
-        position = leftChild
-      } else {
-        const tmp = heap[rightChild]
-        heap[rightChild] = heap[position]
-        heap[position] = tmp
-        position = rightChild
+        position = compared
       }
     } else {
       position = rightChild
@@ -48,4 +52,4 @@ const del = (heap, element) => {
 }
 
 // console.log(insert(heap, 20))
-console.log(del(heap, 15))
+console.log(del(heap2))
