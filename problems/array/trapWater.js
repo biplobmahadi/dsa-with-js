@@ -48,7 +48,6 @@ const trapWaterOptimal = (height) => {
       j--
     }
   }
-
   return totalWater
 }
 
