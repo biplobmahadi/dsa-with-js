@@ -40,8 +40,32 @@ const lenOfLongestSubstrOptimal = (s) => {
       }
     }
   }
+
   return largest
+}
+
+const lenOfLongestSubstrOptimalGood = (s) => {
+  const len = s.length
+  let left = 0
+  let longest = 0
+  const map = new Map()
+
+  for (let right = 0; right < len; right++) {
+    let currentChar = s[right]
+    let seenCurrentChar = map.get(currentChar)
+
+    if (seenCurrentChar >= left) {
+      left = seenCurrentChar + 1
+    }
+
+    map.set(currentChar, right)
+
+    longest = Math.max(longest, right - left + 1)
+  }
+
+  return longest
 }
 
 console.log(lenOfLongestSubstr('abcabcbb'))
 console.log(lenOfLongestSubstrOptimal('abcabcbb'))
+console.log(lenOfLongestSubstrOptimalGood('abcabcbb'))
