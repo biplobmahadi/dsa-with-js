@@ -36,4 +36,34 @@ const head = {
   },
 }
 
+const mnReversalTutorial = (head, m, n) => {
+  let count = 1,
+    currentNode = head,
+    start = null
+
+  while (count < m) {
+    start = currentNode
+    currentNode = currentNode.next
+    count++
+  }
+
+  let newHead = null,
+    tail = currentNode
+  while (count >= m && count <= n) {
+    const nextNode = currentNode.next
+    currentNode.next = newHead
+    newHead = currentNode
+    currentNode = nextNode
+    count++
+  }
+
+  if (start) start.next = newHead
+  tail.next = currentNode
+
+  if (m > 1) return head
+  return newHead
+}
+
+console.log(JSON.stringify(mnReversalTutorial(head, 1, 3), null, 2))
+
 console.log(JSON.stringify(mnReversal(head, 1, 3), null, 2))
