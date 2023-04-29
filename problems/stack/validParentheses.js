@@ -22,4 +22,29 @@ const isValidParentheses = (str) => {
   return true
 }
 
+const map = {
+  '(': ')',
+  '[': ']',
+  '{': '}',
+}
+
+const isValidParenthesesGood = (str) => {
+  const len = str.length
+  const stack = []
+
+  for (let i = 0; i < len; i++) {
+    if (map[str[i]]) {
+      stack.push(str[i])
+    } else {
+      const poppedItem = stack.pop()
+      const currectItem = map[poppedItem]
+
+      if (currectItem !== str[i]) return false
+    }
+  }
+
+  return stack.length === 0
+}
+
 console.log(isValidParentheses('{[()]}'))
+console.log(isValidParenthesesGood('{[()]}'))
