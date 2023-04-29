@@ -12,8 +12,10 @@ const isValidParentheses = (str) => {
         if (str[i] !== ')') return false
       } else if (poppedItem === '[') {
         if (str[i] !== ']') return false
-      } else {
+      } else if (poppedItem === '{') {
         if (str[i] !== '}') return false
+      } else {
+        return false
       }
     }
   }
@@ -46,5 +48,5 @@ const isValidParenthesesGood = (str) => {
   return stack.length === 0
 }
 
-console.log(isValidParentheses('{[()]}'))
+console.log(isValidParentheses('}'))
 console.log(isValidParenthesesGood('{[()]}'))
