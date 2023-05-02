@@ -34,4 +34,28 @@ const validStrWithParentheses = (s) => {
   return firstStr.join('')
 }
 
-console.log(validStrWithParentheses('(ab(v)d)'))
+const validStrWithParenthesesOptimal = (s) => {
+  const arr = s.split('')
+  const stack = []
+  const len = arr.length
+
+  for (let i = 0; i < len; i++) {
+    if (arr[i] === '(') {
+      stack.push(i)
+    } else if (arr[i] === ')' && stack.length) {
+      stack.pop()
+    } else if (arr[i] === ')') {
+      arr[i] = ''
+    }
+  }
+
+  while (stack.length) {
+    const poppedIndex = stack.pop()
+    arr[poppedIndex] = ''
+  }
+
+  return arr.join('')
+}
+
+console.log(validStrWithParentheses('))(('))
+console.log(validStrWithParenthesesOptimal('))(('))
