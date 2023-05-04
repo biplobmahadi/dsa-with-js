@@ -39,4 +39,29 @@ const quickSort = (arr) => {
 
 // space complexity is not satisfied
 
-console.log(quickSort(arr))
+// console.log(quickSort(arr))
+
+const quickSortDifferently = (arr, i, j, pivot) => {
+  while (i < pivot) {
+    if (arr[j] > arr[pivot]) j++
+    else {
+      if (j === pivot) {
+        const tmp = arr[i]
+        arr[i] = arr[pivot]
+        arr[pivot] = tmp
+        pivot = i
+      } else {
+        const tmp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = tmp
+        i++
+        j++
+      }
+    }
+  }
+
+  return arr
+}
+
+const ar = [2, 5, 3, 1, 6, 4]
+console.log(quickSortDifferently(ar, 0, 0, ar.length - 1))
