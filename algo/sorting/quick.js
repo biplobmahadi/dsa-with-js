@@ -41,7 +41,11 @@ const quickSort = (arr) => {
 
 // console.log(quickSort(arr))
 
-const quickSortDifferently = (arr, i, j, pivot) => {
+const getPivotIndex = (arr, left, right) => {
+  let i = left
+  let j = left
+  let pivot = right
+
   while (i < pivot) {
     if (arr[j] > arr[pivot]) j++
     else {
@@ -59,9 +63,18 @@ const quickSortDifferently = (arr, i, j, pivot) => {
       }
     }
   }
+  return pivot
+}
+
+const quickSortDifferently = (arr, left, right) => {
+  if (left >= right) return
+
+  const pivotIndex = getPivotIndex(arr, left, right) // O(n)
+  quickSortDifferently(arr, left, pivotIndex - 1) // O(logn)
+  quickSortDifferently(arr, pivotIndex + 1, right) // O(logn)
 
   return arr
 }
 
-const ar = [2, 5, 3, 1, 6, 4]
-console.log(quickSortDifferently(ar, 0, 0, ar.length - 1))
+const ar = [2, 5, 34, 104, 1, 4, 0, 2, 9, 9, 3]
+console.log(quickSortDifferently(ar, 0, ar.length - 1)) // O(n logn) && O(logn) -> space for recursive stack
