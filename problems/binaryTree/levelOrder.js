@@ -29,3 +29,41 @@ const levelOrderNode = (root) => {
 
   return res
 }
+
+class Node {
+  constructor(value) {
+    this.value = value
+    this.next = null
+  }
+}
+
+class MyQueue {
+  constructor() {
+    this.first = null
+    this.last = null
+  }
+
+  enqueue(value) {
+    const newNode = new Node(value)
+    if (this.last) {
+      this.last.next = newNode
+      this.last = newNode
+    } else {
+      this.first = newNode
+      this.last = this.first
+    }
+  }
+
+  dequeue() {
+    const popped = this.first
+    if (popped) {
+      this.first = this.first.next
+      if (this.first === null) this.last = null
+    }
+    return popped
+  }
+
+  empty() {
+    return this.first === null
+  }
+}
