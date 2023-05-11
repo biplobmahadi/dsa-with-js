@@ -115,4 +115,27 @@ const root = {
   },
 }
 
-console.log(levelOrder(root))
+const levelOrderAnother = (root) => {
+  if (!root) return []
+
+  const res = []
+  const queue = [root]
+
+  while (queue.length) {
+    const arr = []
+    const lengthOfQueue = queue.length
+    let count = 0
+
+    while (count < lengthOfQueue) {
+      const node = queue.shift()
+      arr.push(node.val)
+      if (node.left) queue.push(node.left)
+      if (node.right) queue.push(node.right)
+      count++
+    }
+    res.push(arr)
+  }
+
+  return res
+}
+console.log(levelOrderAnother(root))
