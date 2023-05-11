@@ -67,3 +67,52 @@ class MyQueue {
     return this.first === null
   }
 }
+
+const levelOrder = (root) => {
+  if (!root) return []
+
+  const res = []
+  const queue = new MyQueue()
+  queue.enqueue(root)
+  let levelCount = 1
+  let count = 0
+  let arr = []
+
+  while (!queue.empty()) {
+    const node = queue.dequeue()
+    levelCount--
+    arr.push(node.value.val)
+    if (node.value.left) {
+      queue.enqueue(node.value.left)
+      count++
+    }
+    if (node.value.right) {
+      queue.enqueue(node.value.right)
+      count++
+    }
+    if (levelCount === 0) {
+      levelCount = count
+      count = 0
+      res.push(arr)
+      arr = []
+    }
+  }
+
+  return res
+}
+
+const root = {
+  val: 3,
+  left: {
+    val: 4,
+    left: null,
+    right: null,
+  },
+  right: {
+    val: 5,
+    left: null,
+    right: null,
+  },
+}
+
+console.log(levelOrder(root))
