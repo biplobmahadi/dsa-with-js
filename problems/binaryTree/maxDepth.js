@@ -1,5 +1,5 @@
 const drsWithCount = (root, count) => {
-  if (root === null) return count
+  if (!root) return count
   count++
   return Math.max(
     drsWithCount(root.left, count),
@@ -8,7 +8,6 @@ const drsWithCount = (root, count) => {
 }
 
 const maxDepth = (root) => {
-  if (root === null) return 0
   return drsWithCount(root, 0)
 }
 
