@@ -57,12 +57,19 @@ const root = {
   },
 }
 
-const dfsPreOrder = (root, list) => {
-  if (root === null) return
-  list.push(root.val)
-  if (root.right) dfsPreOrder(root.right, list)
-  if (root.left) dfsPreOrder(root.left, list)
-  return list
+const dfsPreOrder = (root, list, level) => {
+  if (!root) return
+
+  if (list.length <= level) {
+    list.push(root.val)
+  }
+
+  if (root.right) {
+    dfsPreOrder(root.right, list, level + 1)
+  }
+  if (root.left) {
+    dfsPreOrder(root.left, list, level + 1)
+  }
 }
 const dfsInOrder = (root, list) => {
   if (root === null) return
@@ -79,8 +86,14 @@ const dfsPostOrder = (root, list) => {
   return list
 }
 
-const rightSideViewDFS = (root) => {}
+// console.log(dfsPreOrder(root, []))
+// console.log(dfsInOrder(root, []))
+// console.log(dfsPostOrder(root, []))
 
-console.log(dfsPreOrder(root, []))
-console.log(dfsInOrder(root, []))
-console.log(dfsPostOrder(root, []))
+const rightSideViewDFS = (root) => {
+  const res = []
+  dfsPreOrder(root, res, 0)
+  return res
+}
+
+console.log(rightSideViewDFS(root))
