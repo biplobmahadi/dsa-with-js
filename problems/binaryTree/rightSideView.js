@@ -8,17 +8,16 @@ const rightSideView = (root) => {
   while (queue.length) {
     const queueLength = queue.length
     let count = 0
-    let lastNodeVal
+    let currentNode
 
     while (count < queueLength) {
-      const node = queue.shift()
-      lastNodeVal = node.val
-      if (node.left) queue.push(node.left)
-      if (node.right) queue.push(node.right)
+      currentNode = queue.shift()
+      if (currentNode.left) queue.push(currentNode.left)
+      if (currentNode.right) queue.push(currentNode.right)
       count++
     }
 
-    res.push(lastNodeVal)
+    res.push(currentNode.val)
   }
 
   return res
