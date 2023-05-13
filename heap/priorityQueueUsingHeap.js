@@ -38,4 +38,16 @@ class PriorityQueue {
   _compare(i, j) {
     return this._comparator(this._heap[i], this._heap[j])
   }
+
+  push(val) {
+    this._heap.push(val)
+
+    let idx = this.size() - 1
+    while (idx > 0 && this._compare(idx, this._parent(idx))) {
+      this._swap(idx, this._parent(idx))
+      idx = this._parent(idx)
+    }
+
+    return this.size()
+  }
 }
