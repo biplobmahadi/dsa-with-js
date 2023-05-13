@@ -1,5 +1,5 @@
 const findHeight = (root) => {
-  count = 0
+  let count = 0
   let currentNode = root
   while (currentNode) {
     count++
