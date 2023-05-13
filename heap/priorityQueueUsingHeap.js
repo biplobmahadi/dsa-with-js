@@ -50,4 +50,29 @@ class PriorityQueue {
 
     return this.size()
   }
+
+  pop() {
+    if (this._heap.size() > 1) {
+      this._swap(0, this.size() - 1)
+    }
+    const popped = this._heap.pop()
+
+    let idx = 0
+    while (
+      (this._leftChild(idx) < this.size() &&
+        this._compare(this._leftChild(idx), idx)) ||
+      (this._rightChild(idx) < this.size() &&
+        this._compare(this._rightChild(idx), idx))
+    ) {
+      const greaterIdx =
+        this._rightChild(idx) < this.size() &&
+        this._compare(this._rightChild(idx), this._leftChild(idx))
+          ? this._rightChild(idx)
+          : this._leftChild(idx)
+      this._swap(greaterIdx, idx)
+      idx = greaterIdx
+    }
+
+    return popped
+  }
 }
