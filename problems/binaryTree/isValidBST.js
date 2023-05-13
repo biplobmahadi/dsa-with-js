@@ -25,11 +25,7 @@ const root = {
   left: {
     val: 10,
     left: null,
-    right: {
-      val: 16,
-      left: null,
-      right: null,
-    },
+    right: null,
   },
   right: {
     val: 25,
@@ -38,4 +34,18 @@ const root = {
   },
 }
 
-console.log(isValidBST(root))
+const preOrderDFS = (root, min, max) => {
+  if (!(root.val < max && root.val > min)) return false
+
+  if (root.left) if (!preOrderDFS(root.left, min, root.val)) return false
+  if (root.right) if (!preOrderDFS(root.right, root.val, max)) return false
+
+  return true
+}
+
+const isValidBSTOptimal = (root) => {
+  if (!root) return true
+  return preOrderDFS(root, -Infinity, Infinity)
+}
+
+console.log(isValidBSTOptimal(root))
