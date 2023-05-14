@@ -41,4 +41,36 @@ const arr = [
   [16, 17, 18, 19, 20],
 ]
 
-console.log(dfsIn2DArr(arr, 0, 0, [], []))
+// console.log(dfsIn2DArr(arr, 0, 0, [], []))
+
+const dfsIn2DArrOptimal = (arr) => {
+  const list = []
+  const visitedList = new Array(arr.length)
+    .fill(0)
+    .map(() => new Array(arr[0].length).fill(false))
+
+  dfsOptimal(arr, 0, 0, visitedList, list)
+
+  return list
+}
+
+const dfsOptimal = (arr, row, col, visitedList, list) => {
+  if (
+    row < 0 ||
+    row >= arr.length ||
+    col < 0 ||
+    col >= arr[0].length ||
+    visitedList[row][col]
+  )
+    return
+
+  list.push(arr[row][col])
+  visitedList[row][col] = true
+
+  dfsOptimal(arr, row - 1, col, visitedList, list)
+  dfsOptimal(arr, row, col + 1, visitedList, list)
+  dfsOptimal(arr, row + 1, col, visitedList, list)
+  dfsOptimal(arr, row, col - 1, visitedList, list)
+}
+
+console.log(dfsIn2DArrOptimal(arr))
