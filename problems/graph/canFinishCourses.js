@@ -14,7 +14,6 @@ const canFinish = (n, gra) => {
 
     if (listEl) {
       const queue = [i]
-      const currentVer = i
       const seen = {}
 
       while (queue.length) {
@@ -24,7 +23,7 @@ const canFinish = (n, gra) => {
         const connections = adjList[popped]
         if (connections) {
           for (let j = 0; j < connections.length; j++) {
-            if (connections[j] === currentVer) return false
+            if (connections[j] === i) return false
             if (!seen[connections[j]]) {
               queue.push(connections[j])
             }
@@ -55,3 +54,5 @@ const pre = [
 ]
 
 console.log(canFinish(4, pre))
+
+const canfinishUsingTopologicalSort = (n, pre) => {}
