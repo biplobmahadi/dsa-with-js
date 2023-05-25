@@ -53,6 +53,39 @@ const pre = [
   [1, 3],
 ]
 
-console.log(canFinish(4, pre))
+console.log(canFinish(6, preReqs))
 
-const canfinishUsingTopologicalSort = (n, pre) => {}
+const canFinishUsingTopologicalSort = (n, pre) => {
+  const indegrees = new Array(n).fill(0)
+  const adjList = indegrees.map(() => [])
+
+  const lengthOfPre = pre.length
+  for (let i = 0; i < lengthOfPre; i++) {
+    const pair = pre[i]
+    indegrees[pair[0]]++
+    adjList[pair[1]].push(pair[0])
+  }
+
+  const stack = []
+  for (let i = 0; i < n; i++) {
+    if (indegrees[i] === 0) stack.push(i)
+  }
+
+  let count = 0
+  while (stack.length) {
+    const popped = stack.pop()
+    count++
+
+    const connections = adjList[popped]
+    const len = connections.length
+    for (let j = 0; j < len; j++) {
+      indegrees[connections[j]]--
+      if (indegrees[connections[j]] === 0) {
+        stack.push(connections[j])
+      }
+    }
+  }
+  return count === n
+}
+
+console.log(canFinishUsingTopologicalSort(6, preReqs))
