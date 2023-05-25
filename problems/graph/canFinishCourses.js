@@ -89,3 +89,37 @@ const canFinishUsingTopologicalSort = (n, pre) => {
 }
 
 console.log(canFinishUsingTopologicalSort(6, preReqs))
+
+const canFinishOptimal = (n, pre) => {
+  const indegrees = new Array(n).fill(0)
+  const lengthOfPre = pre.length
+  for (let i = 0; i < lengthOfPre; i++) {
+    const pair = pre[i]
+    indegrees[pair[0]]++
+  }
+
+  const stack = []
+  for (let i = 0; i < n; i++) {
+    if (indegrees[i] === 0) stack.push(i)
+  }
+
+  let count = 0
+  while (stack.length) {
+    const popped = stack.pop()
+    count++
+
+    for (let i = 0; i < lengthOfPre; i++) {
+      const pair = pre[i]
+      if (pair[1] === popped) {
+        indegrees[pair[0]]--
+        if (indegrees[pair[0]] === 0) {
+          stack.push(pair[0])
+        }
+      }
+    }
+  }
+
+  return count === n
+}
+
+console.log(canFinishOptimal(4, pre))
