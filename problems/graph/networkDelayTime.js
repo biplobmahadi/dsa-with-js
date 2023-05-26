@@ -1,85 +1,29 @@
-// create a priority queue with min heap
-class PriorityQueue {
-  constructor(comparator = (a, b) => a < b) {
-    this._heap = []
-    this._comparator = comparator
-  }
+// bellman ford algo
+const networkDelayTime = (times, n, k) => {
+  const distances = new Array(n).fill(Infinity)
+  distances[k - 1] = 0
 
-  size() {
-    return this._heap.length
-  }
+  for (let i = 0; i < n - 1; i++) {
+    let count = 0
+    for (let j = 0; j < times.length; j++) {
+      const source = times[j][0]
+      const destination = times[j][1]
+      const weight = times[j][2]
 
-  isEmpty() {
-    return this.size === 0
-  }
-
-  peak() {
-    return this._heap[0]
-  }
-
-  _parent(idx) {
-    return Math.floor((idx - 1) / 2)
-  }
-
-  _leftChild(idx) {
-    return idx * 2 + 1
-  }
-
-  _rightChild(idx) {
-    return idx * 2 + 2
-  }
-
-  _swap(i, j) {
-    const tmp = this._heap[i]
-    this._heap[i] = this._heap[j]
-    this._heap[j] = tmp
-  }
-
-  _compare(i, j) {
-    return this._comparator(this._heap[i], this._heap[j])
-  }
-
-  push(val) {
-    this._heap.push(val)
-
-    let idx = this.size() - 1
-    while (idx > 0 && this._compare(idx, this._parent(idx))) {
-      this._swap(idx, this._parent(idx))
-      idx = this._parent(idx)
+      if (distances[source - 1] + weight < distances[destination - 1]) {
+        distances[destination - 1] = distances[source - 1] + weight
+        count++
+      }
     }
-
-    return this.size()
+    if (count === 0) break
   }
 
-  pop() {
-    if (this._heap.size() > 1) {
-      this._swap(0, this.size() - 1)
-    }
-    const popped = this._heap.pop()
+  const max = Math.max(...distances)
 
-    let idx = 0
-    while (
-      (this._leftChild(idx) < this.size() &&
-        this._compare(this._leftChild(idx), idx)) ||
-      (this._rightChild(idx) < this.size() &&
-        this._compare(this._rightChild(idx), idx))
-    ) {
-      const greaterIdx =
-        this._rightChild(idx) < this.size() &&
-        this._compare(this._rightChild(idx), this._leftChild(idx))
-          ? this._rightChild(idx)
-          : this._leftChild(idx)
-      this._swap(greaterIdx, idx)
-      idx = greaterIdx
-    }
-
-    return popped
-  }
+  return max === Infinity ? -1 : max
 }
 
-const networkDelayTime = (times, n, k) => {}
-
-times = [
+const times = [
   [2, 4, 10],
   [5, 2, 38],
   [3, 4, 33],
@@ -102,6 +46,3 @@ times = [
   [4, 1, 95],
 ]
 console.log(networkDelayTime(times, 5, 1))
-
-const p = new PriorityQueue()
-console.log(p)
