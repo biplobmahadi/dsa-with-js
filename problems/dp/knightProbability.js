@@ -66,3 +66,39 @@ const knightProbabilityBottomUp = (n, k, r, c) => {
 }
 
 console.log(knightProbabilityBottomUp(3, 2, 0, 0)) // O(k.n^2) & O(k.n^2)
+
+const knightProbabilityBottomUpOptimal = (n, k, r, c) => {
+  let prev = new Array(n).fill(0).map(() => new Array(n).fill(0))
+  let curr = new Array(n).fill(0).map(() => new Array(n).fill(0))
+
+  prev[r][c] = 1
+
+  for (let step = 1; step <= k; step++) {
+    for (let row = 0; row < n; row++) {
+      for (let col = 0; col < n; col++) {
+        for (let i = 0; i < DIRECTIONS.length; i++) {
+          const dir = DIRECTIONS[i]
+          const prevRow = row + dir[0]
+          const prevCol = col + dir[1]
+
+          if (prevRow >= 0 && prevCol >= 0 && prevRow < n && prevCol < n) {
+            curr[row][col] += prev[prevRow][prevCol] / 8
+          }
+        }
+      }
+    }
+    prev = curr
+    curr = new Array(n).fill(0).map(() => new Array(n).fill(0))
+  }
+
+  let sum = 0
+  for (let row = 0; row < n; row++) {
+    for (let col = 0; col < n; col++) {
+      sum += prev[row][col]
+    }
+  }
+
+  return sum
+}
+
+console.log(knightProbabilityBottomUpOptimal(3, 2, 0, 0)) // O(k.n^2) & O(n^2)
