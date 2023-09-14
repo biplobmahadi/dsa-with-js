@@ -95,7 +95,7 @@ const networkDelayTime = function (times, n, k) {
   }
 
   distances[k - 1] = 0
-  const queue = new MyPriorityQueue((a, b) => a < b)
+  const queue = new MyPriorityQueue((a, b) => distances[a] < distances[b])
   queue.push(k - 1)
 
   while (!queue.isEmpty()) {
